@@ -1,0 +1,25 @@
+<div class="app-container">
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="isVisible1 = !isVisible1"
+  >
+    {{ isVisible1 ? "Hide" : "Show" }} Card 1
+  </button>
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="isVisible2 = !isVisible2"
+  >
+    {{ isVisible2 ? "Hide" : "Show" }} Card 2
+  </button>
+
+  <div>
+    <app-card-one *ngIf="isVisible1"></app-card-one>
+  </div>
+  <div>
+    <app-card-two *ngIf="isVisible2"></app-card-two>
+  </div>
+</div>
+
+<div class="square" (click)="handleClick()"></div>

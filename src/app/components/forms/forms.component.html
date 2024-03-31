@@ -1,0 +1,71 @@
+<div class="form">
+  <h1>My Template-driven Form</h1>
+  <input
+    [(ngModel)]="email"
+    type="email"
+    class="form-control"
+    placeholder="name@example.com"
+  />
+
+  <select
+    [(ngModel)]="select"
+    class="form-select form-select-lg mb-3"
+    aria-label="Large select example"
+  >
+    <option value="">Open this select menu</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+
+  <div class="form-check">
+    <input
+      [(ngModel)]="checkbox"
+      class="form-check-input"
+      type="checkbox"
+      value=""
+    />
+    <label class="form-check-label" for="flexCheckDefault">
+      Default checkbox
+    </label>
+  </div>
+
+  <button (click)="sendForm('template-driven')" class="btn btn-primary">
+    Submit
+  </button>
+</div>
+
+<form [formGroup]="myForm" class="form">
+  <h1>My Reactive Form</h1>
+  <input
+    formControlName="email"
+    type="email"
+    class="form-control"
+    placeholder="name@example.com"
+  />
+
+  <select
+    formControlName="select"
+    class="form-select form-select-lg mb-3"
+    aria-label="Large select example"
+  >
+    <option value="">Open this select menu</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+
+  <div class="form-check">
+    <input
+      formControlName="checkbox"
+      class="form-check-input"
+      type="checkbox"
+      value=""
+    />
+    <label class="form-check-label" for="flexCheckDefault">
+      Default checkbox
+    </label>
+  </div>
+
+  <button (click)="sendForm('reactive')" class="btn btn-primary">Submit</button>
+</form>
