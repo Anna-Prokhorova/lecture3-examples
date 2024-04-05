@@ -67,5 +67,11 @@
     </label>
   </div>
 
-  <button (click)="sendForm('reactive')" class="btn btn-primary">Submit</button>
+  <button
+    [disabled]="myForm.invalid"
+    (click)="sendForm('reactive')"
+    class="btn btn-primary"
+  >
+    Submit
+  </button>
 </form>

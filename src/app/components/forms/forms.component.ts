@@ -8,6 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-forms',
@@ -31,6 +32,11 @@ export class FormsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.myForm.controls['email'].valueChanges
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe(console.log);
+
+    this.myForm.valueChanges.subscribe(console.log);
   }
 
   public sendForm(type: 'template-driven' | 'reactive'): void {
@@ -47,7 +53,7 @@ export class FormsComponent implements OnInit {
 
   public initForm(): void {
     this.myForm = this.formBuilder.nonNullable.group({
-      email: [''],
+      email: ['', [Validators.required, Validators.email]],
       select: [''],
       checkbox: [false],
     });

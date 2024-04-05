@@ -2,11 +2,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
+  OnDestroy,
   OnInit,
   inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainService } from '../../services/main.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -20,18 +23,19 @@ import { Observable } from 'rxjs';
 export class CardTwoComponent implements OnInit {
   private mainService: MainService = inject(MainService);
   private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
-
-  public hotSource$: Observable<string> = this.mainService.getHotSource$();
+  private destroyRef: DestroyRef = inject(DestroyRef);
   public hotSourceValue: string = 'пока я не получил данных :(';
 
   ngOnInit(): void {
     console.log('Card 2');
     this.mainService.getColdSource$().subscribe(console.log);
 
-    this.mainService.getHotSource$().subscribe((val: string): void => {
-      this.hotSourceValue = val;
-      // console.log(val);  //Задача на дебаг
-      this.cdr.markForCheck();
-    });
+    this.mainService
+      .getHotSource$()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((val: string): void => {
+        this.hotSourceValue = val;
+        this.cdr.markForCheck();
+      });
   }
 }
